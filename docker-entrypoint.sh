@@ -12,8 +12,8 @@ case "$CMD" in
     "$MAVEN_ARGS" \
     "$CMD" \
     -DskipTests \
-    -P"$MAVEN_PROFILE" \
-    -pl"$MAVEN_PROJECT" \
+    --activate-profiles "$MAVEN_PROFILE" \
+    --projects "$MAVEN_PROJECT" \
     "$@"
     )
     ;;
