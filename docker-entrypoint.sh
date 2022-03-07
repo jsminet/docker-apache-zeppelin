@@ -8,11 +8,12 @@ case "$CMD" in
   package|install)
   shift 1
     CMD=(
-    ./mvnw "$CMD" \
+    ./mvnw \
+    "$MAVEN_ARGS" \
+    "$CMD" \
     -DskipTests \
     -P"$MAVEN_PROFILE" \
-    -pl '"$MAVEN_PROJECT"' \
-    "$MAVEN_ARGS"
+    -pl"$MAVEN_PROJECT" \
     "$@"
     )
     ;;
