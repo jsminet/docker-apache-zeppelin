@@ -14,7 +14,7 @@ case "$CMD" in
     -Pinclude-hadoop \
     -Phadoop3 \
     -Pspark-scala-2.12 \
-    -Pweb-angular && \
+    -Pweb-angular \
     "$@"
     )
     ;;

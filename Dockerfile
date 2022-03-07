@@ -27,7 +27,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
-WORKDIR /workspace
+WORKDIR /workspace/zeppelin
 
 # Allow npm and bower to run with root privileges
 RUN set -ex && \
@@ -35,7 +35,9 @@ RUN set -ex && \
     apt-get install -y ${BUILD_DEPS} && \
     echo "unsafe-perm=true" > ~/.npmrc && \
     echo '{ "allow_root": true }' > ~/.bowerrc && \
-    git clone --progress --verbose --depth 1 --branch master https://github.com/apache/zeppelin.git && \
+    git clone --progress --verbose --depth 1 \
+              --branch master https://github.com/apache/zeppelin.git \
+              /workspace/zeppelin && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
     apt-get -yq autoremove git && \
     rm -rf /var/lib/apt/lists/*
