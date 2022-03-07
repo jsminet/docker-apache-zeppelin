@@ -17,8 +17,7 @@
 FROM openjdk:8-jdk-slim-buster
 LABEL maintainer="JS Minet"
 
-ARG ZEPPELIN_VERSION master
-
+ENV ZEPPELIN_VERSION master
 ENV BUILD_DEPS git tini 
 ENV DEBIAN_FRONTEND noninteractive
 ENV MAVEN_OPTS -Xmx1024m -Xms512m -XX:MaxPermSize=256m -Djava.awt.headless=true
@@ -38,7 +37,7 @@ RUN set -ex && \
     echo "unsafe-perm=true" > ~/.npmrc && \
     echo '{ "allow_root": true }' > ~/.bowerrc && \
     git clone --progress --verbose --depth 1 \
-              --branch "${ZEPPELIN_VERSION}" https://github.com/apache/zeppelin.git \
+              --branch ${ZEPPELIN_VERSION} https://github.com/apache/zeppelin.git \
               /workspace/zeppelin && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
     apt-get -yq autoremove git && \
