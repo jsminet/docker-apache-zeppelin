@@ -19,11 +19,11 @@ LABEL maintainer="JS Minet"
 
 ARG ZEPPELIN_VERSION 10.0.1
 
-ENV BUILD_DEPS \
- git \
- tini 
-
-ENV DEBIAN_FRONTEND=noninteractive
+ENV BUILD_DEPS git tini 
+ENV DEBIAN_FRONTEND noninteractive
+ENV MAVEN_OPTS -Xmx1024m -Xms512m -XX:MaxPermSize=256m -Djava.awt.headless=true
+ENV MAVEN_ARGS -T2 -B -e
+ENV MAVEN_PROFILE build-distr,spark-3.1,include-hadoop,hadoop3,spark-scala-2.12,web-angular
 
 COPY docker-entrypoint.sh /usr/local/bin/
 

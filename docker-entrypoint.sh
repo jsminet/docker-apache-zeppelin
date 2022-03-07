@@ -5,16 +5,12 @@ set -ex
 
 CMD="$1"
 case "$CMD" in
-  package)
+  package|install)
   shift 1
     CMD=(
-    ./mvnw -B package -DskipTests \
-    -Pbuild-distr \
-    -Pspark-3.1 \
-    -Pinclude-hadoop \
-    -Phadoop3 \
-    -Pspark-scala-2.12 \
-    -Pweb-angular \
+    ./mvnw "$CMD" \
+    -DskipTests \
+    -P"$MAVEN_PROFILE" \
     "$@"
     )
     ;;
