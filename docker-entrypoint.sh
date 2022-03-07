@@ -11,6 +11,8 @@ case "$CMD" in
     ./mvnw "$CMD" \
     -DskipTests \
     -P"$MAVEN_PROFILE" \
+    -pl '"$MAVEN_PROJECT"' \
+    "$MAVEN_ARGS"
     "$@"
     )
     ;;

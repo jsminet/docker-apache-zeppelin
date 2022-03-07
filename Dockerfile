@@ -17,13 +17,15 @@
 FROM openjdk:8-jdk-slim-buster
 LABEL maintainer="JS Minet"
 
-ARG ZEPPELIN_VERSION 10.0.1
+ARG ZEPPELIN_VERSION master
 
 ENV BUILD_DEPS git tini 
 ENV DEBIAN_FRONTEND noninteractive
 ENV MAVEN_OPTS -Xmx1024m -Xms512m -XX:MaxPermSize=256m -Djava.awt.headless=true
 ENV MAVEN_ARGS -T2 -B -e
 ENV MAVEN_PROFILE build-distr,spark-3.1,include-hadoop,hadoop3,spark-scala-2.12,web-angular
+# Example with doesn't compile all interpreters
+ENV MAVEN_PROJECT !groovy,!submarine,!livy,!hbase,!pig,!file,!flink,!ignite,!kylin
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
@@ -36,14 +38,11 @@ RUN set -ex && \
     echo "unsafe-perm=true" > ~/.npmrc && \
     echo '{ "allow_root": true }' > ~/.bowerrc && \
     git clone --progress --verbose --depth 1 \
-              --branch master https://github.com/apache/zeppelin.git \
+              --branch "${ZEPPELIN_VERSION}" https://github.com/apache/zeppelin.git \
               /workspace/zeppelin && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
     apt-get -yq autoremove git && \
     rm -rf /var/lib/apt/lists/*
-    #./mvnw -B package -DskipTests -Pbuild-distr -Pspark-3.1 -Pinclude-hadoop -Phadoop3 -Pspark-scala-2.12 -Pweb-angular && \
-    # Example with doesn't compile all interpreters
-    # ./mvnw -B package -DskipTests -Pbuild-distr -Pspark-3.1 -Pinclude-hadoop -Phadoop3 -Pspark-scala-2.12 -Pweb-angular -pl '!groovy,!submarine,!livy,!hbase,!pig,!file,!flink,!ignite,!kylin' && \
     #mv /workspace/zeppelin/zeppelin-distribution/target/zeppelin-*/zeppelin-* /opt/zeppelin/ && \
 
 ENTRYPOINT ["docker-entrypoint.sh"]
