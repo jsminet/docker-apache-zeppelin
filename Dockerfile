@@ -23,19 +23,21 @@ ENV BUILD_DEPS \
  git \
  tini 
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 COPY docker-entrypoint.sh /usr/local/bin/
 
 WORKDIR /workspace
 
 # Allow npm and bower to run with root privileges
 RUN set -ex && \
-    apt-get update && DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
     apt-get install -y ${BUILD_DEPS} && \
     echo "unsafe-perm=true" > ~/.npmrc && \
     echo '{ "allow_root": true }' > ~/.bowerrc && \
     git clone --progress --verbose --depth 1 --branch master https://github.com/apache/zeppelin.git && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
-    apt-get autoremove git && \
+    apt-get -yq autoremove git && \
     rm -rf /var/lib/apt/lists/*
     #./mvnw -B package -DskipTests -Pbuild-distr -Pspark-3.1 -Pinclude-hadoop -Phadoop3 -Pspark-scala-2.12 -Pweb-angular && \
     # Example with doesn't compile all interpreters
