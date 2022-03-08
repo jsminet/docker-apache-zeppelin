@@ -17,9 +17,10 @@
 FROM openjdk:8-jdk-slim-buster
 LABEL maintainer="JS Minet"
 
-ENV ZEPPELIN_VERSION master
-ENV BUILD_DEPS git tini npm libfontconfig r-base-dev r-cran-evaluate
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
+ARG ZEPPELIN_VERSION=master
+ARG BUILD_DEPS="git tini npm libfontconfig r-base-dev r-cran-evaluate"
+
 ENV MAVEN_OPTS -Xmx2g -Xms1g -XX:MaxMetaspaceSize=512m -Djava.awt.headless=true
 ENV MAVEN_ARGS -B
 ENV MAVEN_PROFILE build-distr,spark-3.1,include-hadoop,hadoop3,spark-scala-2.12,web-angular
@@ -37,8 +38,8 @@ RUN set -ex && \
     echo "unsafe-perm=true" > ~/.npmrc && \
     echo '{ "allow_root": true }' > ~/.bowerrc && \
     git clone --progress --verbose --depth 1 \
-              --branch ${ZEPPELIN_VERSION} https://github.com/apache/zeppelin.git \
-              /workspace/zeppelin && \
+        --branch ${ZEPPELIN_VERSION} https://github.com/apache/zeppelin.git \
+        /workspace/zeppelin && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
     rm -rf /var/lib/apt/lists/*
     #mv /workspace/zeppelin/zeppelin-distribution/target/zeppelin-*/zeppelin-* /opt/zeppelin/ && \

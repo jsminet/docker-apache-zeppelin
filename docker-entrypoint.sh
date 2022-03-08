@@ -4,6 +4,19 @@
 set -ex
 
 CMD="$1"
+
+if [[ -z "${MAVEN_PROFILE}" ]]; then
+  unset ALL_MAVEN_PROFILE
+else
+  ALL_MAVEN_PROFILE="--activate-profiles ${MAVEN_PROFILE}"
+fi
+
+if [[ -z "${MAVEN_PROJECT}" ]]; then
+  unset ALL_MAVEN_PROJECT
+else
+  ALL_MAVEN_PROJECT="--projects ${MAVEN_PROJECT}"
+fi
+
 case "$CMD" in
   package|install)
   shift 1
@@ -12,8 +25,8 @@ case "$CMD" in
     "$MAVEN_ARGS" \
     "$CMD" \
     -DskipTests \
-    --activate-profiles "$MAVEN_PROFILE" \
-    --projects "$MAVEN_PROJECT" \
+    "$ALL_MAVEN_PROFILE" \
+    "$ALL_MAVEN_PROJECT" \
     "$@"
     )
     ;;
