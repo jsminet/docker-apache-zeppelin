@@ -18,13 +18,13 @@ FROM openjdk:8-jdk-slim-buster
 LABEL maintainer="JS Minet"
 
 ENV ZEPPELIN_VERSION master
-ENV BUILD_DEPS git tini 
+ENV BUILD_DEPS git tini npm libfontconfig r-base-dev r-cran-evaluate
 ENV DEBIAN_FRONTEND noninteractive
-ENV MAVEN_OPTS -Xmx2048m -Xms1024m -Djava.awt.headless=true
+ENV MAVEN_OPTS -Xmx2g -Xms1g -XX:MaxMetaspaceSize=512m -Djava.awt.headless=true
 ENV MAVEN_ARGS -B
 ENV MAVEN_PROFILE build-distr,spark-3.1,include-hadoop,hadoop3,spark-scala-2.12,web-angular
 # Example with doesn't compile all interpreters
-ENV MAVEN_PROJECT !groovy,!submarine,!livy,!hbase,!pig,!file,!flink,!ignite,!kylin
+ENV MAVEN_PROJECT !bigquery,!file,!flink,!groovy,!hbase,!ignite,!kotlin,!kylin,!livy,!markdown,!pig,!submarine
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
@@ -40,7 +40,6 @@ RUN set -ex && \
               --branch ${ZEPPELIN_VERSION} https://github.com/apache/zeppelin.git \
               /workspace/zeppelin && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
-    apt-get -yq autoremove git && \
     rm -rf /var/lib/apt/lists/*
     #mv /workspace/zeppelin/zeppelin-distribution/target/zeppelin-*/zeppelin-* /opt/zeppelin/ && \
 
