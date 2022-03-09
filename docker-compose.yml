@@ -6,7 +6,7 @@ services:
     build:
       context: ./dist
       args: 
-        - ZEPPELIN_VERSION: $ZEPPELIN_VERSION
+        - ZEPPELIN_VERSION=$ZEPPELIN_VERSION
     environment:
       - MAVEN_PROJECT
     volumes:
