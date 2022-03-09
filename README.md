@@ -3,6 +3,10 @@ Docker compose file for Apache Zeppelin building
 
 # Usage
 
-## Building Apache Zeppelin
+Check config setup
 
-$ docker-compose up --build zeppelin-distribution
+```$ docker-compose config```
+
+Launching build
+
+```$ docker-compose up --build zeppelin-distribution```

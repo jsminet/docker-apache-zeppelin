@@ -3,7 +3,10 @@ version: '3.7'
 services:
   zeppelin-distribution:
     image: zeppelin-distribution
-    build: ./dist
+    build:
+      context: ./dist
+      args: 
+        - ZEPPELIN_VERSION: $ZEPPELIN_VERSION
     volumes:
       - "maven-repo:/root/.m2"
       - "distro:/workspace/zeppelin/zeppelin-distribution/target"
