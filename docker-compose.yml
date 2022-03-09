@@ -8,7 +8,7 @@ services:
       args: 
         - ZEPPELIN_VERSION=$ZEPPELIN_VERSION
     environment:
-      - MAVEN_PROJECT
+      - MAVEN_PROJECT=
     volumes:
       - "maven-repo:/root/.m2"
       - "distro:/workspace/zeppelin/zeppelin-distribution/target"

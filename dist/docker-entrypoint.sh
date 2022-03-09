@@ -14,7 +14,7 @@ fi
 if [[ -z "${MAVEN_PROJECT}" ]]; then
   unset ALL_MAVEN_PROJECTS
 else
-  ALL_MAVEN_PROJECTS="-pl '${MAVEN_PROJECT}'"
+  ALL_MAVEN_PROJECTS="-pl ${MAVEN_PROJECT}"
 fi
 
 case "$CMD" in
