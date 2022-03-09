@@ -6,13 +6,13 @@ set -ex
 CMD="$1"
 
 if [[ -z "${MAVEN_PROFILE}" ]]; then
-  ALL_MAVEN_PROFILES=""
+  ALL_MAVEN_PROFILES=
 else
   ALL_MAVEN_PROFILES="-P${MAVEN_PROFILE}"
 fi
 
 if [[ -z "${MAVEN_PROJECT}" ]]; then
-  ALL_MAVEN_PROJECTS=""
+  ALL_MAVEN_PROJECTS=
 else
   ALL_MAVEN_PROJECTS="-pl '${MAVEN_PROJECT}'"
 fi
