@@ -9,5 +9,5 @@ services:
       - "distro:/workspace/zeppelin/zeppelin-distribution/target"
 
 volumes:
-  - maven-repo
-  - distro
+  maven-repo:
+  distro:

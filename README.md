@@ -1,5 +1,8 @@
 # docker-apache-zeppelin
-Docker file for Apache Zeppelin building
+Docker compose file for Apache Zeppelin building
 
 # Usage
 
+## Building Apache Zeppelin
+
+$ docker-compose up --build zeppelin-distribution
