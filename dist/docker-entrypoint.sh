@@ -6,15 +6,15 @@ set -ex
 CMD="$1"
 
 if [[ -z "${MAVEN_PROFILE}" ]]; then
-  unset ALL_MAVEN_PROFILE
+  unset ALL_MAVEN_PROFILES
 else
-  ALL_MAVEN_PROFILE=--activate-profiles ${MAVEN_PROFILE}
+  ALL_MAVEN_PROFILES="-P${MAVEN_PROFILE}"
 fi
 
 if [[ -z "${MAVEN_PROJECT}" ]]; then
-  unset ALL_MAVEN_PROJECT
+  unset ALL_MAVEN_PROJECTS
 else
-  ALL_MAVEN_PROJECT=--projects ${MAVEN_PROJECT}
+  ALL_MAVEN_PROJECTS="-pl '${MAVEN_PROJECT}'"
 fi
 
 case "$CMD" in
@@ -25,8 +25,8 @@ case "$CMD" in
     "$MAVEN_ARGS" \
     "$CMD" \
     -DskipTests \
-    "$ALL_MAVEN_PROFILE" \
-    "$ALL_MAVEN_PROJECT" \
+    "$ALL_MAVEN_PROFILES" \
+    "$ALL_MAVEN_PROJECTS" \
     "$@"
     )
     ;;
