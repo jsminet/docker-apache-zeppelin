@@ -45,7 +45,7 @@ RUN set -ex && \
     echo "$LOG_TAG install basic packages" && \
     apt-get -y update && \
     apt-get install -y locales language-pack-en tini openjdk-8-jre-headless wget && \
-    "$LOG_TAG install miniconda" && \
+    echo "$LOG_TAG install miniconda" && \
     wget --progress=bar:force:noscroll https://repo.anaconda.com/miniconda/Miniconda3-${miniconda_version}-Linux-${ARCH}.sh -O miniconda.sh && \
     echo "${miniconda_sha256} miniconda.sh" > anaconda.sha256 && \
     sha256sum --strict -c anaconda.sha256 && \
