@@ -19,13 +19,13 @@ LABEL maintainer="Apache Software Foundation <dev@zeppelin.apache.org>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 # Install conda to manage python and R packages
-ARG miniconda_version="py37_4.9.2"
+ARG miniconda_version=py37_4.9.2
 # Hashes via https://docs.conda.io/en/latest/miniconda_hashes.html
-ARG miniconda_sha256="79510c6e7bd9e012856e25dcb21b3e093aa4ac8113d9aa7e82a86987eabe1c31"
+ARG miniconda_sha256=79510c6e7bd9e012856e25dcb21b3e093aa4ac8113d9aa7e82a86987eabe1c31
 ARG ARCH=x86_64
+ARG ZEPPELIN_VERSION=0.10.1
 
-ENV ZEPPELIN_VERSION="0.10.1" \
-    LOG_TAG="[ZEPPELIN_${ZEPPELIN_VERSION}]:" \
+ENV LOG_TAG="[ZEPPELIN_${ZEPPELIN_VERSION}]:" \
     ZEPPELIN_HOME="/opt/zeppelin" \
     HOME="/opt/zeppelin" \
     LANG=en_US.UTF-8 \

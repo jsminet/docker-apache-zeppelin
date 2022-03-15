@@ -24,8 +24,6 @@ ARG BUILD_DEPS="git tini npm libfontconfig r-base-dev r-cran-evaluate"
 ENV MAVEN_OPTS -Xmx2g -Xms1g -XX:MaxMetaspaceSize=512m -Djava.awt.headless=true
 ENV MAVEN_ARGS -B
 ENV MAVEN_PROFILE build-distr,spark-3.1,include-hadoop,hadoop3,spark-scala-2.12,web-angular
-# Doesn't compile all interpreters
-ENV MAVEN_PROJECT '!alluxio,!angular,!beam,!bigquery,!cassandra,!elasticsearch,!flink,!geode,!groovy,!hazelcastjet,!hbase,!ignite,!java,!jdbc,!kotlin,!kylin,!livy,!markdown,!neo4j,!pig,!python,!sap,!scalding,!scio,!shell,!sparql,!submarine'
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
