@@ -30,7 +30,8 @@ COPY docker-entrypoint.sh /usr/local/bin/
 WORKDIR /workspace/zeppelin
 
 # Allow npm and bower to run with root privileges
-RUN set -ex && \
+RUN env && \
+    set -ex && \
     apt-get update && \
     apt-get install -y ${BUILD_DEPS} && \
     echo "unsafe-perm=true" > ~/.npmrc && \

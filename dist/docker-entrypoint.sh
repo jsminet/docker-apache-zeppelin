@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # echo commands to the terminal output
+env
 set -ex
 
 CMD="$1"

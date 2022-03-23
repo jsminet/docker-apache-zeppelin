@@ -9,6 +9,7 @@ services:
         - ZEPPELIN_VERSION=$ZEPPELIN_BRANCH_VERSION
     environment:
       - MAVEN_PROJECT=$MAVEN_PROJECT
+      - MAVEN_PROFILE=$MAVEN_PROFILE
     volumes:
       - "maven-repo:/root/.m2"
       - "distro:/workspace/zeppelin/zeppelin-distribution/target"
