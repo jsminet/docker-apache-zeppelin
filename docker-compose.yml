@@ -3,6 +3,7 @@ version: '3.7'
 services:
   zeppelin-distribution:
     image: zeppelin-distribution
+    command: package -U
     build:
       context: ./dist
       args: 
