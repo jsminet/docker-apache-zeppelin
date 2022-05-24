@@ -17,20 +17,21 @@ FROM ubuntu:20.04
 
 LABEL maintainer="Apache Software Foundation <dev@zeppelin.apache.org>"
 
-ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive \
 # Install conda to manage python and R packages
-ARG miniconda_version=py37_4.9.2
+    miniconda_version=py37_4.9.2 \
 # Hashes via https://docs.conda.io/en/latest/miniconda_hashes.html
-ARG miniconda_sha256=79510c6e7bd9e012856e25dcb21b3e093aa4ac8113d9aa7e82a86987eabe1c31
-ARG ARCH=x86_64
-ARG ZEPPELIN_VERSION=0.10.1
+    miniconda_sha256=79510c6e7bd9e012856e25dcb21b3e093aa4ac8113d9aa7e82a86987eabe1c31 \
+    ARCH=x86_64 \
+    CPU=amd \
+    ZEPPELIN_VERSION=0.10.1
 
 ENV LOG_TAG="[ZEPPELIN_${ZEPPELIN_VERSION}]:" \
     ZEPPELIN_HOME="/opt/zeppelin" \
     HOME="/opt/zeppelin" \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
-    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
+    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-${CPU}64 \
     ZEPPELIN_ADDR="0.0.0.0" \
     PATH=/opt/conda/envs/python_3_with_R/bin:/opt/conda/bin:$PATH
 
@@ -48,7 +49,7 @@ RUN set -ex && \
     echo "$LOG_TAG install miniconda" && \
     wget --progress=bar:force:noscroll https://repo.anaconda.com/miniconda/Miniconda3-${miniconda_version}-Linux-${ARCH}.sh -O miniconda.sh && \
     echo "${miniconda_sha256} miniconda.sh" > anaconda.sha256 && \
-    #sha256sum --strict -c anaconda.sha256 && \
+    sha256sum --strict -c anaconda.sha256 && \
     bash miniconda.sh -b -p /opt/conda && \
     conda config --set always_yes yes --set changeps1 no && \
     conda info -a && \
