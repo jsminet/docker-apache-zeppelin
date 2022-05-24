@@ -7,7 +7,8 @@ services:
     build:
       context: ./dist
       args: 
-        - ZEPPELIN_VERSION=$ZEPPELIN_BRANCH_VERSION
+        - ZEPPELIN_BRANCH_VERSION=$ZEPPELIN_BRANCH_VERSION
+        - ZEPPELIN_REPOSITORY=$ZEPPELIN_REPOSITORY
     environment:
       - MAVEN_PROJECT=$MAVEN_PROJECT
       - MAVEN_PROFILE=$MAVEN_PROFILE

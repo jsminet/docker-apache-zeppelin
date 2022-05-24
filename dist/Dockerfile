@@ -18,7 +18,8 @@ FROM openjdk:8-jdk-slim-buster
 LABEL maintainer="JS Minet"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG ZEPPELIN_VERSION=master
+ARG ZEPPELIN_REPOSITORY=https://github.com/apache/zeppelin.git
+ARG ZEPPELIN_BRANCH_VERSION=master
 ARG BUILD_DEPS="git tini npm libfontconfig r-base-dev r-cran-evaluate"
 
 ENV MAVEN_OPTS -Xmx2g -Xms1g -XX:MaxMetaspaceSize=512m -Djava.awt.headless=true
@@ -37,7 +38,7 @@ RUN env && \
     echo "unsafe-perm=true" > ~/.npmrc && \
     echo '{ "allow_root": true }' > ~/.bowerrc && \
     git clone --progress --verbose --depth 1 \
-        --branch ${ZEPPELIN_VERSION} https://github.com/apache/zeppelin.git \
+        --branch ${ZEPPELIN_BRANCH_VERSION} ${ZEPPELIN_REPOSITORY} \
         /workspace/zeppelin && \
     chmod +x /usr/local/bin/docker-entrypoint.sh && \
     rm -rf /var/lib/apt/lists/*
