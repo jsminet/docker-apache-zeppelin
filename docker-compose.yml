@@ -22,6 +22,8 @@ services:
       context: ./binary
       args:
         - ZEPPELIN_VERSION=$ZEPPELIN_VERSION
+    ports:
+      - "$ZEPPELIN_WEBUI_PORT:$ZEPPELIN_WEBUI_PORT"
   
   zeppelin-binary-armv8:
     image: zeppelin
@@ -32,6 +34,8 @@ services:
         - CPU=arm
         - miniconda_sha256=ccbac800a2d897218dde1df3711d26299a083ca0beb118edf62cf8f3d9516da8
         - ZEPPELIN_VERSION=$ZEPPELIN_VERSION
+    ports:
+      - "$ZEPPELIN_WEBUI_PORT:$ZEPPELIN_WEBUI_PORT"
 
 volumes:
   maven-repo:
