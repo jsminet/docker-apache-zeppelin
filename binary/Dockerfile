@@ -19,10 +19,10 @@ LABEL maintainer="Apache Software Foundation <dev@zeppelin.apache.org>"
 
 ARG DEBIAN_FRONTEND=noninteractive \
 # Install conda to manage python and R packages
-    miniconda_version=py37_4.9.2 \
+    #miniconda_version=py37_4.9.2 \
 # Hashes via https://docs.conda.io/en/latest/miniconda_hashes.html
-    miniconda_sha256=79510c6e7bd9e012856e25dcb21b3e093aa4ac8113d9aa7e82a86987eabe1c31 \
-    ARCH=x86_64 \
+    #miniconda_sha256=79510c6e7bd9e012856e25dcb21b3e093aa4ac8113d9aa7e82a86987eabe1c31 \
+    #ARCH=x86_64 \
     CPU=amd \
     ZEPPELIN_VERSION=0.10.1
 
@@ -33,10 +33,11 @@ ENV LOG_TAG="[ZEPPELIN_${ZEPPELIN_VERSION}]:" \
     LC_ALL=en_US.UTF-8 \
     JAVA_HOME=/usr/lib/jvm/java-8-openjdk-${CPU}64 \
     ZEPPELIN_ADDR="0.0.0.0" \
-    PATH=/opt/conda/envs/python_3_with_R/bin:/opt/conda/bin:$PATH
+    #PATH=/opt/conda/envs/python_3_with_R/bin:/opt/conda/bin:$PATH
+    PATH=/opt/conda/bin:$PATH
 
 # Install python and R packages via conda
-COPY env_python_3_with_R.yml /env_python_3_with_R.yml
+#COPY env_python_3_with_R.yml /env_python_3_with_R.yml
 COPY log4j.properties ${ZEPPELIN_HOME}/conf/
 COPY log4j_docker.properties ${ZEPPELIN_HOME}/conf/
 COPY log4j2.properties ${ZEPPELIN_HOME}/conf/
@@ -46,21 +47,21 @@ RUN set -ex && \
     echo "$LOG_TAG install basic packages" && \
     apt-get -y update && \
     apt-get install -y locales language-pack-en tini openjdk-8-jre-headless wget && \
-    echo "$LOG_TAG install miniconda" && \
-    wget --progress=bar:force:noscroll https://repo.anaconda.com/miniconda/Miniconda3-${miniconda_version}-Linux-${ARCH}.sh -O miniconda.sh && \
-    echo "${miniconda_sha256} miniconda.sh" > anaconda.sha256 && \
-    sha256sum --strict -c anaconda.sha256 && \
-    bash miniconda.sh -b -p /opt/conda && \
-    conda config --set always_yes yes --set changeps1 no && \
-    conda info -a && \
-    conda install mamba -c conda-forge && \
-    mamba env update -f /env_python_3_with_R.yml --prune && \
+    #echo "$LOG_TAG install miniconda" && \
+    #wget --progress=bar:force:noscroll https://repo.anaconda.com/miniconda/Miniconda3-${miniconda_version}-Linux-${ARCH}.sh -O miniconda.sh && \
+    #echo "${miniconda_sha256} miniconda.sh" > anaconda.sha256 && \
+    #sha256sum --strict -c anaconda.sha256 && \
+    #bash miniconda.sh -b -p /opt/conda && \
+    #conda config --set always_yes yes --set changeps1 no && \
+    #conda info -a && \
+    #conda install mamba -c conda-forge && \
+    #mamba env update -f /env_python_3_with_R.yml --prune && \
     # Cleanup
-    rm -v miniconda.sh anaconda.sha256  && \
+    #rm -v miniconda.sh anaconda.sha256  && \
     # Cleanup based on https://github.com/ContinuumIO/docker-images/commit/cac3352bf21a26fa0b97925b578fb24a0fe8c383
-    find /opt/conda/ -follow -type f -name '*.a' -delete && \
-    find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
-    mamba clean -ay && \
+    #find /opt/conda/ -follow -type f -name '*.a' -delete && \
+    #find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
+    #mamba clean -ay && \
     # Allow to modify conda packages. This allows malicious code to be injected into other interpreter sessions, therefore it is disabled by default
     # chmod -R ug+rwX /opt/conda
     echo "$LOG_TAG Download Zeppelin binary" && \
@@ -76,7 +77,7 @@ RUN set -ex && \
     chmod -R 775 "${ZEPPELIN_HOME}/logs" "${ZEPPELIN_HOME}/run" "${ZEPPELIN_HOME}/notebook" "${ZEPPELIN_HOME}/conf" && \
     # Allow process to create new folders (e.g. webapps)
     chmod 775 ${ZEPPELIN_HOME} && \
-    chmod -R 775 /opt/conda && \
+    #chmod -R 775 /opt/conda && \
     # Cleanup
     rm -rf /var/lib/apt/lists/* && \
     apt-get autoclean && \
